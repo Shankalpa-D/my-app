@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+export default function App() {
+	interface WeatherProps {
+		weather: string;
+	}
+	
+	type WeatherState = {
+		count: number;
+	};
+	class WeatherComponent extends React.Component<WeatherProps, WeatherState> {
+		constructor(props: WeatherProps) {
+			super(props);
+			this.state = {
+			count: 0
+			};
+		}
+		componentDidMount() {
+			this.setState({ count: 1 });
+		}
+		clickHandler(): void {
+			this.setState({ count: this.state.count + 1 });
+		}
+		render() {
+			return (
+				<h1 onClick={() => this.clickHandler()}>
+					The weather is {this.props.weather}, and the counter shows{" "}
+					{this.state.count}
+				</h1>
+			);
+		}
+	}
+	return (<WeatherComponent weather="sunny" />);
+}
